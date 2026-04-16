@@ -1,0 +1,52 @@
+{
+  "name": "react-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "start": "NODE_ENV=production node server.ts",
+    "build": "NODE_ENV=production vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf build",
+    "lint": "tsc --noEmit",
+    "upload-books": "tsx upload_books_to_firestore.ts"
+  },
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "adm-zip": "^0.5.17",
+    "axios": "^1.15.0",
+    "better-sqlite3": "^12.4.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^4.22.1",
+    "firebase": "^12.10.0",
+    "firebase-admin": "^13.7.0",
+    "google-translate-api-x": "^10.7.2",
+    "html2canvas": "^1.4.1",
+    "idb": "^8.0.3",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "node-fetch": "^3.3.2",
+    "pdf-parse": "^1.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "translate-google": "^1.5.0",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.21",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

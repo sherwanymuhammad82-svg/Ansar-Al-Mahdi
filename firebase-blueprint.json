@@ -1,0 +1,130 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a user in the application.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The user's unique ID." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "role": { "type": "string", "enum": ["admin", "user"], "description": "The user's role." },
+        "photoURL": { "type": "string", "description": "The user's profile photo URL." },
+        "email": { "type": "string", "description": "The user's email address." }
+      },
+      "required": ["uid", "displayName", "role"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Represents a conversation between users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The conversation's unique ID." },
+        "participants": { "type": "array", "description": "The IDs of the participants." },
+        "type": { "type": "string", "enum": ["private", "group"], "description": "The type of conversation." },
+        "name": { "type": "string", "description": "The name of the group conversation." },
+        "createdAt": { "type": "string", "format": "date", "description": "The creation timestamp." }
+      },
+      "required": ["participants", "type", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Represents a message in a conversation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The message's unique ID." },
+        "conversationId": { "type": "string", "description": "The ID of the conversation." },
+        "senderId": { "type": "string", "description": "The ID of the sender." },
+        "text": { "type": "string", "description": "The message text." },
+        "mediaURL": { "type": "string", "description": "The URL of the media." },
+        "createdAt": { "type": "string", "format": "date", "description": "The creation timestamp." }
+      },
+      "required": ["conversationId", "senderId", "createdAt"]
+    },
+    "Book": {
+      "title": "Book",
+      "description": "Represents a book in the library.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The book's unique ID." },
+        "title": { "type": "string", "description": "The title of the book." },
+        "description": { "type": "string", "description": "A brief description of the book." },
+        "content_ku": { "type": "string", "description": "The content of the book in Kurdish." },
+        "coverUrl": { "type": "string", "description": "The URL of the book cover image." },
+        "author": { "type": "string", "description": "The author of the book." }
+      },
+      "required": ["title", "content_ku"]
+    },
+    "AdminPost": {
+      "title": "AdminPost",
+      "description": "Represents a post created by an admin.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The post's unique ID." },
+        "title": { "type": "object", "description": "The title in multiple languages." },
+        "content": { "type": "object", "description": "The content in multiple languages." },
+        "imageUrl": { "type": "string", "description": "The URL of the post image." },
+        "videoUrl": { "type": "string", "description": "The URL of the post video." },
+        "audioUrl": { "type": "string", "description": "The URL of the post audio." },
+        "type": { "type": "string", "enum": ["text", "image", "video", "audio"], "description": "The type of post." },
+        "sectionId": { "type": "string", "description": "The section ID where the post belongs." },
+        "author": { "type": "object", "description": "The author in multiple languages." },
+        "createdAt": { "type": "string", "format": "date", "description": "The creation timestamp." }
+      },
+      "required": ["title", "type", "sectionId", "createdAt"]
+    },
+    "SectionView": {
+      "title": "SectionView",
+      "description": "Represents a view of a section.",
+      "type": "object",
+      "properties": {
+        "sectionId": { "type": "string" },
+        "sectionName": { "type": "string" },
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["sectionId", "userId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles."
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "Conversation" },
+      "description": "Conversations."
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "Message" },
+      "description": "Messages within a conversation."
+    },
+    "/books/{bookId}": {
+      "schema": { "$ref": "Book" },
+      "description": "Books in the library."
+    },
+    "/admin_posts/{postId}": {
+      "schema": { "$ref": "AdminPost" },
+      "description": "Posts created by admins."
+    },
+    "/section_views/{viewId}": {
+      "schema": { "$ref": "SectionView" },
+      "description": "Section views."
+    },
+    "/methodology/{id}": {
+      "schema": { "type": "object" },
+      "description": "Methodology content."
+    },
+    "/fatwas/{id}": {
+      "schema": { "type": "object" },
+      "description": "Fatwas content."
+    },
+    "/tahami/{id}": {
+      "schema": { "type": "object" },
+      "description": "Tahami content."
+    },
+    "/mahdi/{id}": {
+      "schema": { "type": "object" },
+      "description": "Mahdi content."
+    }
+  }
+}

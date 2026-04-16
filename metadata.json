@@ -1,0 +1,5 @@
+{
+  "name": "Islamic App",
+  "description": "An Islamic application with Fiqh library, Quran audio, and live streams.",
+  "requestFramePermissions": []
+}

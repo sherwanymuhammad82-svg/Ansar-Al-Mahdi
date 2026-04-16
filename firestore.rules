@@ -1,0 +1,136 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        ('role' in request.auth.token && request.auth.token.role == "admin") ||
+        ('email' in request.auth.token && request.auth.token.email == "frmeskabdwlla45@gmail.com" && request.auth.token.email_verified == true)
+      );
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    // Public section views tracking
+    match /section_views/{docId} {
+      allow read, create: if true;
+    }
+
+    match /admin_posts/{postId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /_connection_test_/{docId} {
+      allow get: if true;
+      allow list: if true;
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /Books/{bookId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /books/{bookId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /book_contents/{contentId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /fatwas/{docId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /tahami/{docId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /mahdi/{docId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /dajjal/{docId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /methodology/{docId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    match /AnsarGroups/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /Settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /Banners/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /community_users/{userId} {
+      allow read, write: if true;
+    }
+
+    match /conversations/{conversationId} {
+      allow read, write: if true;
+      
+      match /messages/{messageId} {
+        allow read, write: if true;
+      }
+    }
+
+    match /PdfBooks/{docId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin() || (isAuthenticated() && isOwner(resource.data.uploadedBy));
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /chats/{conversationId}/{allPaths=**} {
+      allow read, write: if true;
+    }
+    match /community_profiles/{allPaths=**} {
+      allow read, write: if true;
+    }
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
