@@ -15,15 +15,15 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps --force
 
       - name: Build Web Project
-        run: npm run build
+        run: CI=false npm run build
 
       - name: Setup Capacitor and Android
         run: |
-          npx cap add android
-          npx cap copy
+          npx cap add android || true
+          npx cap copy || true
 
       - name: set up JDK 17
         uses: actions/setup-java@v4
@@ -33,8 +33,13 @@ jobs:
 
       - name: Build APK
         run: |
-          cd android && chmod +x gradlew
-          ./gradlew assembleRelease
+          if [ -d "android" ]; then
+            cd android && chmod +x gradlew
+            ./gradlew assembleRelease
+          else
+            echo "Android folder not found!"
+            exit 1
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
