@@ -1,0 +1,6 @@
+{
+  "appId": "com.ansar.mahdi",
+  "appName": "Ansar Al Mahdi",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
